@@ -11,4 +11,4 @@ name = "pv-recovery"
 path = "src/main.rs"
 
 [dependencies]
-pv-core = { path = "../pv-core" }
+pv-core = { path = "../pv-core", version = "0.0.0" }

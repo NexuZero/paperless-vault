@@ -19,10 +19,6 @@ allow = [
 ]
 confidence-threshold = 0.8
 
-[[licenses.clarify]]
-# placeholder — add per-crate license overrides here if a dependency's
-# detected license doesn't match its published one.
-
 [bans]
 multiple-versions = "warn"
 wildcards = "deny"
