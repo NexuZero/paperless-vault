@@ -1,0 +1,33 @@
+# --- secrets (never committed) ---
+.env
+.env.*
+*.key
+*.pem
+*.minisign.key
+
+# --- real documents and local vaults (never committed) ---
+private/
+real-docs/
+*.pvault/
+test-vaults/
+fixtures/generated/
+
+# --- Rust ---
+target/
+
+# --- Flutter / Dart ---
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+app/build/
+build/
+coverage/
+
+# --- tooling / OS ---
+*.log
+.idea/
+.vscode/
+*.swp
+.DS_Store
+
+# NOTE: Cargo.lock, pubspec.lock and vendor/ ARE committed (SR-18).

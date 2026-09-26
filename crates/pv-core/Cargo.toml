@@ -1,0 +1,11 @@
+[package]
+name = "pv-core"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Vault lifecycle, import/export, jobs, lock, backup. src/api/ is the flutter_rust_bridge surface."
+
+[lib]
+name = "pv_core"
+crate-type = ["cdylib", "rlib"]

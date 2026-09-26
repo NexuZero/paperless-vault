@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "additionalDirectories": ["../paperless-vault-ai-brain"],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./private/**)",
+      "Read(./real-docs/**)"
+    ]
+  }
+}

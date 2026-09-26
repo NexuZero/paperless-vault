@@ -1,0 +1,41 @@
+# cargo-deny policy — licences, advisories, bans. See 02_TRD.md §6.
+# LGPL is allowed only for a separate executable (e.g. bwrap), never a linked dependency —
+# that carve-out is enforced by review, not by this file.
+
+[graph]
+targets = [{ triple = "x86_64-unknown-linux-gnu" }]
+
+[licenses]
+allow = [
+    "MIT",
+    "Apache-2.0",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "ISC",
+    "Zlib",
+    "Unicode-3.0",
+    "OFL-1.1",
+    "CC0-1.0",
+]
+confidence-threshold = 0.8
+
+[[licenses.clarify]]
+# placeholder — add per-crate license overrides here if a dependency's
+# detected license doesn't match its published one.
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+deny = [
+    { crate = "sodiumoxide" }, # deprecated, RUSTSEC-2021-0137 — see GRAVEYARD G-01
+]
+
+[advisories]
+db-path = "~/.cargo/advisory-db"
+db-urls = ["https://github.com/rustsec/advisory-db"]
+yanked = "deny"
+
+[sources]
+unknown-registry = "deny"
+unknown-git = "deny"
+allow-registry = ["https://github.com/rust-lang/crates.io-index"]

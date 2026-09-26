@@ -1,0 +1,10 @@
+[package]
+name = "pv-sandbox"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "bwrap launch, seccomp, Landlock, rlimits, worker protocol. The only crate allowed to launch workers."
+
+[lib]
+name = "pv_sandbox"

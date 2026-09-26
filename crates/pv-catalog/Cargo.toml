@@ -1,0 +1,10 @@
+[package]
+name = "pv-catalog"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "SQLCipher open/verify, schema, migrations, queries, FTS5."
+
+[lib]
+name = "pv_catalog"

@@ -1,0 +1,11 @@
+[package]
+name = "pv-worker"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Sandboxed worker binary: inspect, extract-text, ocr, render-preview. No keys, no network, no home."
+
+[[bin]]
+name = "pv-worker"
+path = "src/main.rs"

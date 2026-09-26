@@ -1,0 +1,18 @@
+[workspace]
+resolver = "2"
+members = [
+    "crates/pv-format",
+    "crates/pv-crypto",
+    "crates/pv-catalog",
+    "crates/pv-names",
+    "crates/pv-sandbox",
+    "crates/pv-worker",
+    "crates/pv-core",
+    "crates/pv-recovery",
+]
+
+[workspace.package]
+version = "0.0.0"
+edition = "2021"
+license = "MIT OR Apache-2.0"
+publish = false

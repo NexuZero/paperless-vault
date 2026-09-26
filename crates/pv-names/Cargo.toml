@@ -1,0 +1,10 @@
+[package]
+name = "pv-names"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "Filename sanitising and bidi/control-character display rules (SR-12)."
+
+[lib]
+name = "pv_names"

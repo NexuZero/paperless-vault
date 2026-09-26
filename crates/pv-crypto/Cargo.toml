@@ -1,0 +1,10 @@
+[package]
+name = "pv-crypto"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+description = "The only crate that calls libsodium. Safe wrappers, secret types."
+
+[lib]
+name = "pv_crypto"
