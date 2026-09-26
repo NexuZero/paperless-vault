@@ -66,3 +66,22 @@ is the alternate if more KDF cost is preferred over more margin.
 This is a *recommendation*, not a final pin — `07_SECURITY_ENV_PLAN.md` §5 (SR-06) says these
 parameters get set at T-202/T-212 and recorded in the versioned vault header, not hardcoded once
 here. Recorded in `ENVIRONMENT.md` for now as the T-104 measurement.
+
+## 4. Addendum (found at T-110): this timing does not reproduce through `libsodium-sys-stable`'s own build
+
+`src/main.rs` was later reused to directly compare the above numbers against libsodium built by
+`libsodium-sys-stable`'s `build.rs` (the actual dependency `pv-crypto` will use) instead of the
+hand-built library `argon2_timing.c` used above. Same libsodium 1.0.22, same machine, same
+parameters:
+
+```
+opslimit=12 -> 4.075s / 5.573s (two runs)   (was 1.041s hand-built)
+opslimit=20 -> 7.637s / 8.953s (two runs)   (was 1.730s hand-built)
+```
+
+A consistent ~4-5x slowdown, not a fluke. Root cause not confirmed in the time available
+(suspect: `build.rs` derives `CFLAGS` from Cargo's `cc` crate rather than libsodium's own
+`./configure` defaults, possibly missing the AVX2 Argon2/BLAKE2b code path) — see
+`spikes/prototype/README.md` §2 for the full writeup and the resulting open item: **T-201 must
+re-measure Argon2id timing against the real production build, not carry forward this spike's
+original 1.73s number unchecked.**
