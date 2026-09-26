@@ -21,26 +21,34 @@ fn main() -> rusqlite::Result<()> {
     conn.execute("CREATE TABLE t (id INTEGER PRIMARY KEY, v TEXT)", [])?;
     conn.execute("INSERT INTO t (v) VALUES ('hello')", [])?;
 
+    fn pragma_str(conn: &Connection, name: &str) -> rusqlite::Result<String> {
+        conn.query_row(&format!("PRAGMA {name}"), [], |r| {
+            r.get::<_, String>(0).or_else(|_| r.get::<_, i64>(0).map(|v| v.to_string()))
+        })
+    }
+
     println!("--- verifying required settings (Brief §8 / SR-07) ---");
-    let hmac: i32 = conn.query_row("PRAGMA cipher_use_hmac", [], |r| r.get(0))?;
-    println!("cipher_use_hmac (page HMAC auth)  = {hmac} (expect 1)");
-
-    let mem_sec: i32 = conn.query_row("PRAGMA cipher_memory_security", [], |r| r.get(0))?;
-    println!("cipher_memory_security            = {mem_sec} (expect 1)");
-
-    let temp_store: i32 = conn.query_row("PRAGMA temp_store", [], |r| r.get(0))?;
-    println!("temp_store                        = {temp_store} (expect 2 = MEMORY)");
-
-    let secure_delete: i32 = conn.query_row("PRAGMA secure_delete", [], |r| r.get(0))?;
-    println!("secure_delete                      = {secure_delete} (expect 1)");
-
-    let plaintext_header: i32 = conn
-        .query_row("PRAGMA cipher_plaintext_header_size", [], |r| r.get(0))
-        .unwrap_or(0);
-    println!("cipher_plaintext_header_size      = {plaintext_header} (expect 0 = never enabled)");
-
-    let version: String = conn.query_row("PRAGMA cipher_version", [], |r| r.get(0))?;
-    println!("cipher_version                     = {version}");
+    println!(
+        "cipher_use_hmac (page HMAC auth)  = {} (expect 1)",
+        pragma_str(&conn, "cipher_use_hmac")?
+    );
+    println!(
+        "cipher_memory_security            = {} (expect 1)",
+        pragma_str(&conn, "cipher_memory_security")?
+    );
+    println!(
+        "temp_store                        = {} (expect 2 = MEMORY)",
+        pragma_str(&conn, "temp_store")?
+    );
+    println!(
+        "secure_delete                      = {} (expect 1)",
+        pragma_str(&conn, "secure_delete")?
+    );
+    println!(
+        "cipher_plaintext_header_size      = {} (expect 0 = never enabled)",
+        pragma_str(&conn, "cipher_plaintext_header_size").unwrap_or_else(|_| "0".to_string())
+    );
+    println!("cipher_version                     = {}", pragma_str(&conn, "cipher_version")?);
 
     // FTS5 availability (SR-10: full-text index must live inside SQLCipher itself).
     println!("--- FTS5 ---");
