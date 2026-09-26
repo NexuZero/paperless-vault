@@ -1,0 +1,10 @@
+[workspace]
+
+[package]
+name = "sodium-spike"
+version = "0.0.0"
+edition = "2021"
+publish = false
+
+[dependencies]
+libsodium-sys-stable = "1.22.1"
